@@ -1,15 +1,18 @@
-import express, { Application, Request, Response } from 'express';
-import bodyParser from 'body-parser';
+import express, { Application } from "express";
+import dotenv from "dotenv";
+import bodyParser from "body-parser";
+import bookRoutes from "./src/routes/bookRoutes";
+import userRoutes from "./src/routes/userRoutes";
 
+dotenv.config();
 const app: Application = express();
 
 app.use(bodyParser.json());
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('Hello, World!');
-});
+app.use("/", bookRoutes);
+app.use("/", userRoutes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.SERVER_PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
